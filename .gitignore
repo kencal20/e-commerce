@@ -28,4 +28,3 @@ node_modules*
 
 ecommerce_backend.json*
 firebase.config.ts*
-web/src/data
