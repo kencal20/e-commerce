@@ -1,4 +1,4 @@
-import { faRightFromBracket, faSearch, faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
     const [navbarCollapse, setNavbarCollapse] = useState(false);
     const [searchBarVisible, setSearchBarVisible] = useState(false);
     const [user, setUser] = useState<any>(null); // State to hold user data
+    const [dropdownVisible, setDropdownVisible] = useState(false); // State for user dropdown visibility
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,12 +34,8 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
         setSearchBarVisible(!searchBarVisible);
     };
 
-    const handleUserIconClick = () => {
-        if (user) {
-            navigate('/dashboard');
-        } else {
-            navigate('/login'); // Navigate to login if the user is not authenticated
-        }
+    const toggleDropdown = () => {
+        setDropdownVisible(!dropdownVisible);
     };
 
     const handleLogout = async () => {
@@ -47,6 +44,12 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
             navigate('/login');
         } catch (error) {
             console.error("Error signing out:", error);
+        }
+    };
+
+    const handleUserIconClick = () => {
+        if (!user) {
+            navigate('/login'); // Navigate to login if the user is not authenticated
         }
     };
 
@@ -114,21 +117,47 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
                                     SALE
                                 </NavLink>
                             </li>
-                            <li>
-                                <button
-                                    onClick={handleUserIconClick}
-                                    className="block py-2 px-3 rounded md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                                >
-                                    <FontAwesomeIcon icon={faUser} />
-                                </button>
-                            </li>
-                            {isAuthenticated && (
+                            {isAuthenticated ? (
+                                <li className="relative">
+                                    <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
+                                        onClick={toggleDropdown}
+                                        className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                                        <FontAwesomeIcon icon={faUser} />
+                                        <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                        </svg>
+                                    </button>
+
+                                    {dropdownVisible && (
+                                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                                            <button
+                                                onClick={() => navigate('/profile')}
+                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            >
+                                                Profile
+                                            </button>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            >
+                                                Logout
+                                            </button>
+                                            <button
+                                                onClick={() => navigate('/settings')}
+                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            >
+                                                Settings
+                                            </button>
+                                        </div>
+                                    )}
+                                </li>
+                            ) : (
                                 <li>
                                     <button
-                                        onClick={handleLogout}
+                                        onClick={handleUserIconClick}
                                         className="block py-2 px-3 rounded md:p-0 text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                                     >
-                                        <FontAwesomeIcon icon={faRightFromBracket} />
+                                        <FontAwesomeIcon icon={faUser} />
                                     </button>
                                 </li>
                             )}
