@@ -1,4 +1,4 @@
-import { services } from '../data/servicesData'; // Adjust the path to where your servicesData file is located
+import services from "../data/servicesData";
 
 export default function ServicesComponent() {
     return (
