@@ -115,41 +115,54 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
                                     SALE
                                 </NavLink>
                             </li>
-                            {isAuthenticated ? (
-                                <li className="relative">
-                                    <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
-                                        onClick={toggleDropdown}
-                                        className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
-                                        <FontAwesomeIcon icon={faUser} />
-                                        <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                                        </svg>
-                                    </button>
+                            {isAuthenticated && (
+                                <>
+                                    <li>
+                                        <NavLink
+                                            to="/dashboard"
+                                            className={({ isActive }) =>
+                                                `block py-2 px-3 rounded md:p-0 ${isActive ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 dark:text-white md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            }
+                                        >
+                                            DASHBOARD
+                                        </NavLink>
+                                    </li>
+                                    <li className="relative">
+                                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
+                                            onClick={toggleDropdown}
+                                            className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                                            <FontAwesomeIcon icon={faUser} />
+                                            <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                            </svg>
+                                        </button>
 
-                                    {dropdownVisible && (
-                                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-                                            <button
-                                                onClick={() => navigate('/profile')}
-                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                            >
-                                                Profile
-                                            </button>
-                                            <button
-                                                onClick={handleLogoutAndReset} // Call logout and reset state
-                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                            >
-                                                Logout
-                                            </button>
-                                            <button
-                                                onClick={() => navigate('/settings')}
-                                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                                            >
-                                                Settings
-                                            </button>
-                                        </div>
-                                    )}
-                                </li>
-                            ) : (
+                                        {dropdownVisible && (
+                                            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                                                <button
+                                                    onClick={() => navigate('/profile')}
+                                                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                >
+                                                    Profile
+                                                </button>
+                                                <button
+                                                    onClick={handleLogoutAndReset} // Call logout and reset state
+                                                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                >
+                                                    Logout
+                                                </button>
+                                                <button
+                                                    onClick={() => navigate('/settings')}
+                                                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                >
+                                                    Settings
+                                                </button>
+                                            </div>
+                                        )}
+                                    </li>
+                                </>
+                            )}
+                            {!isAuthenticated && (
                                 <li>
                                     <button
                                         onClick={handleUserIconClick}
