@@ -1,7 +1,9 @@
 interface cardProps {
   title: string;
-  children?: React.ReactNode
+  children: React.ReactNode
   className?: string
+  titleClassName:string
+  childrenClassName:string
 }
 interface productsProps {
   name: string
