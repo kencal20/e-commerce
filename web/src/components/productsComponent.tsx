@@ -29,7 +29,7 @@ export default function ProductsComponent({ showShopLink }: Props) {
                     <CardComponent
                         title={product.name}
                         key={index}
-                        className="text-2xl font-medium shadow-lg bg-slate-100 dark:bg-dark_theme-background border-0"
+                        className="text-2xl font-medium shadow-xl bg-slate-100 dark:bg-dark_theme-background border-0"
                         childrenClassName=""
                         titleClassName=""
                     >

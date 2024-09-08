@@ -12,7 +12,7 @@ export default function ServicesComponent() {
                         <CardComponent
                             key={index}
                             title={service.title}
-                            className="bg-gray-50 dark:bg-dark_theme-card rounded-lg  border-0 shadow-lg"
+                            className="bg-gray-50 dark:bg-dark_theme-card rounded-lg  border-0 shadow-xl"
                             childrenClassName=''
                             titleClassName="dark:text-gray-400 "
                         >
