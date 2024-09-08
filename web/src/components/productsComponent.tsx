@@ -28,6 +28,8 @@ export default function ProductsComponent({ showShopLink }: Props) {
                             title={product.name}
                             key={index}
                             className="text-2xl font-medium"
+                            childrenClassName=""
+                            titleClassName=""
                         >
                             <img src={product.img} alt="" />
                             <div className="flex justify-between mt-5">

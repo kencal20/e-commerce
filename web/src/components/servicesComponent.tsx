@@ -1,4 +1,5 @@
-import services from "../data/servicesData";
+import CardComponent from './cardComponent';
+import services from '../data/servicesData';
 
 export default function ServicesComponent() {
     return (
@@ -8,13 +9,18 @@ export default function ServicesComponent() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {services.map((service, index) => (
-                        <div key={index} className="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
+                        <CardComponent
+                            key={index}
+                            title={service.title}
+                            className="bg-gray-50 dark:bg-gray-800 rounded-lg  border-0 shadow-lg"
+                            childrenClassName=''
+                            titleClassName="dark:text-gray-400 "
+                        >
                             <div className="mb-4">
                                 {service.icon}
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{service.title}</h3>
                             <p className="text-gray-600 dark:text-gray-400">{service.description}</p>
-                        </div>
+                        </CardComponent>
                     ))}
                 </div>
             </div>
