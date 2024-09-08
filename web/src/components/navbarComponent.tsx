@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import SearchBarComponent from "./searchBarComponent";
-import { auth } from "../config/firebase.config"; // Import your Firebase auth
+import { auth } from "../config/firebase.config"; 
+import useLogout from "./logoutComponent";
 
 interface NavbarComponentProps {
     isAuthenticated: boolean;
@@ -15,6 +16,7 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
     const [user, setUser] = useState<any>(null); // State to hold user data
     const [dropdownVisible, setDropdownVisible] = useState(false); // State for user dropdown visibility
     const navigate = useNavigate();
+    const handleLogout = useLogout(); // Get the logout function
 
     useEffect(() => {
         // Subscribe to authentication state changes
@@ -38,19 +40,15 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
         setDropdownVisible(!dropdownVisible);
     };
 
-    const handleLogout = async () => {
-        try {
-            await auth.signOut();
-            navigate('/login');
-        } catch (error) {
-            console.error("Error signing out:", error);
-        }
-    };
-
     const handleUserIconClick = () => {
         if (!user) {
             navigate('/login'); // Navigate to login if the user is not authenticated
         }
+    };
+
+    const handleLogoutAndReset = async () => {
+        await handleLogout(); // Call the logout function
+        setDropdownVisible(false); // Reset the dropdown visibility
     };
 
     return (
@@ -124,7 +122,7 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
                                         className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
                                         <FontAwesomeIcon icon={faUser} />
                                         <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                         </svg>
                                     </button>
 
@@ -137,7 +135,7 @@ export default function NavbarComponent({ isAuthenticated }: NavbarComponentProp
                                                 Profile
                                             </button>
                                             <button
-                                                onClick={handleLogout}
+                                                onClick={handleLogoutAndReset} // Call logout and reset state
                                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                                             >
                                                 Logout
